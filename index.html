@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Para Ti ❤️</title>
+
+  <style>
+    :root{
+      --pink1:#ff758c;
+      --pink2:#ff7eb3;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(to right, var(--pink1), var(--pink2));
+      font-family: Arial, sans-serif;
+      text-align: center;
+      color: white;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      overflow: hidden;
+    }
+
+    h1 {
+      margin-top: 28px;
+      font-size: clamp(28px, 4vw, 44px);
+      text-shadow: 0 6px 20px rgba(0,0,0,.25);
+    }
+
+    .card {
+      margin-top: 20px;
+      width: min(92vw, 600px);
+      display: flex;
+      justify-content: center;
+    }
+
+    .slider {
+      animation: float 4s ease-in-out infinite;
+      width: 280px;
+      height: 450px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(6px);
+    }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .slider img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain; 
+      background: #000;
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1.2s ease-in-out;
+    }
+
+    .slider img.active {
+      opacity: 1;
+    }
+
+    p {
+      margin: 14px 0 0;
+      font-size: 15px;
+      opacity: 0.95;
+      text-shadow: 0 6px 16px rgba(0,0,0,.25);
+    }
+
+    /* corazones */
+    .heart {
+      position: fixed;
+      top: -10vh;
+      left: 0;
+      will-change: transform, opacity;
+      pointer-events: none;
+      animation: fall linear forwards;
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,.25));
+    }
+
+    @keyframes fall {
+      to { transform: translateY(120vh); }
+    }
+
+    footer {
+      margin-top: auto;
+      margin-bottom: 20px;
+      font-size: 14px;
+      letter-spacing: 1px;
+      opacity: 0.9;
+      text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    /* Cursor máquina */
+    #firma::after {
+      content: "|";
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50%, 100% { opacity: 1; }
+      25%, 75% { opacity: 0; }
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Feliz San Valentín ❤️</h1>
+
+  <div class="card">
+    <div class="slider" aria-label="Galería de fotos">
+      <img src="foto1.jpg" class="active" alt="Foto 1" />
+      <img src="foto2.jpg" alt="Foto 2" />
+      <img src="foto3.jpg" alt="Foto 3" />
+    </div>
+  </div>
+
+  <p>Eres la persona que me da paz, gracias por todo te adoro demasiado</p>
+  <p>Me gusta tenerte en mi vida, me haces mucha falta y te quiero mucho uwu❤️</p>
+
+  <!-- Footer ANTES del script para que #firma exista -->
+  <footer>
+    Para ti hoy y siempre ❤️  
+    <br>
+    <span id="firma"></span>
+  </footer>
+
+  <script>
+    // Slider
+    let index = 0;
+    const images = document.querySelectorAll(".slider img");
+
+    setInterval(() => {
+      images[index].classList.remove("active");
+      index = (index + 1) % images.length;
+      images[index].classList.add("active");
+    }, 3000);
+
+    // Corazones
+    function spawnHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.textContent = "❤️";
+
+      const size = Math.random() * 18 + 10;
+      const left = Math.random() * 100;
+      const duration = Math.random() * 2 + 3;
+      const opacity = Math.random() * 0.6 + 0.3;
+
+      heart.style.fontSize = size + "px";
+      heart.style.left = left + "vw";
+      heart.style.opacity = opacity;
+      heart.style.animationDuration = duration + "s";
+
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), duration * 1000 + 200);
+    }
+    setInterval(spawnHeart, 250);
+
+    // Máquina de escribir
+    const texto = "Alexander Archi";
+    const firma = document.getElementById("firma");
+    let i = 0;
+
+    function escribir() {
+      if (i < texto.length) {
+        firma.textContent += texto.charAt(i);
+        i++;
+        setTimeout(escribir, 120);
+      }
+    }
+    setTimeout(escribir, 1200);
+  </script>
+</body>
+</html>
+
